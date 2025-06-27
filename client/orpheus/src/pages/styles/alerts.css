@@ -1,0 +1,910 @@
+/* Enhanced Interactive Alert System CSS */
+
+:root {
+  --primary-cyan: #01a9c2;
+  --primary-cyan-light: rgba(1, 169, 194, 0.1);
+  --primary-cyan-medium: rgba(1, 169, 194, 0.3);
+  --primary-cyan-hover: #0197b3;
+  --accent-orange: #ffa500;
+  --accent-red: #ff6b6b;
+  --accent-green: #4ecdc4;
+  --bg-dark: #000000;
+  --bg-dark-secondary: #0a0a0a;
+  --bg-card: rgba(15, 15, 15, 0.85);
+  --bg-card-hover: rgba(25, 25, 25, 0.95);
+  --border-color: rgba(42, 42, 42, 0.6);
+  --border-hover: rgba(1, 169, 194, 0.4);
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Main Container */
+.alert-container {
+  margin-left: 0px;
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(1, 169, 194, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.02) 0%, transparent 50%),
+    linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 50%, #111111 100%);
+  padding: 40px 32px;
+  color: var(--text-primary);
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 100vh;
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header Section */
+.alert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+  padding: 0 8px;
+  position: relative;
+}
+
+.alert-header::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-cyan-medium), transparent);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { opacity: 0.3; }
+  to { opacity: 0.8; }
+}
+
+.alert-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  margin: 0;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-cyan) 50%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  animation: titleSlide 0.8s ease-out 0.2s both;
+}
+
+@keyframes titleSlide {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.user-location {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 12px 20px;
+  color: var(--primary-cyan);
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: locationSlide 0.8s ease-out 0.4s both;
+}
+
+@keyframes locationSlide {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.user-location::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(1, 169, 194, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.user-location:hover::before {
+  left: 100%;
+}
+
+.user-location:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-color: var(--primary-cyan-medium);
+  box-shadow: 0 8px 32px rgba(1, 169, 194, 0.2);
+}
+
+.location-icon {
+  font-size: 16px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Environmental Data Grid */
+.environmental-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+/* Enhanced Card Design */
+.env-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 200px;
+  cursor: pointer;
+  animation: cardEnter 0.6s ease-out both;
+  animation-delay: calc(var(--card-index, 0) * 0.1s);
+}
+
+@keyframes cardEnter {
+  from { 
+    opacity: 0; 
+    transform: translateY(40px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+.env-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    var(--primary-cyan) 0%, 
+    var(--accent-orange) 50%, 
+    var(--primary-cyan) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.env-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--primary-cyan-light) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.env-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px var(--primary-cyan-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.env-card:hover::before {
+  opacity: 1;
+}
+
+.env-card:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 1;
+}
+
+.card-icon {
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-cyan-light), var(--glass-bg));
+  border-radius: 16px;
+  border: 1px solid var(--primary-cyan-medium);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.card-icon::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: linear-gradient(135deg, var(--primary-cyan-light), transparent);
+  border-radius: 15px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.env-card:hover .card-icon {
+  transform: rotate(5deg) scale(1.1);
+  box-shadow: 0 8px 24px var(--primary-cyan-light);
+}
+
+.env-card:hover .card-icon::before {
+  opacity: 1;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Content */
+.card-content {
+  position: relative;
+  z-index: 1;
+  height: calc(100% - 84px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Weather Specific Styles */
+.weather-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  animation: slideInLeft 0.6s ease-out 0.2s both;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.temp {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(45deg, var(--primary-cyan), var(--accent-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  text-shadow: 0 4px 8px rgba(1, 169, 194, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.env-card:hover .temp {
+  transform: scale(1.05);
+}
+
+.weather-main {
+  text-align: right;
+  animation: slideInRight 0.6s ease-out 0.3s both;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.condition {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+
+.feels-like {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background: var(--glass-bg);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(1, 169, 194, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.detail:hover::before {
+  left: 100%;
+}
+
+.detail:hover {
+  transform: translateY(-2px);
+  background: rgba(1, 169, 194, 0.05);
+  border-color: var(--primary-cyan-medium);
+  box-shadow: 0 4px 16px rgba(1, 169, 194, 0.1);
+}
+
+.detail span:first-child {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.detail span:last-child {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.weather-warning {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 165, 0, 0.1));
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--accent-red);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Air Quality Styles */
+.aqi-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.aqi-value {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(45deg, var(--accent-orange), #ff6b6b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.env-card:hover .aqi-value {
+  transform: scale(1.05);
+}
+
+.aqi-main {
+  text-align: right;
+}
+
+.aqi-level {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.pm25-info {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.pollutants, .health-impact {
+  font-size: 11px;
+  padding: 8px 12px;
+  background: rgba(255, 165, 0, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-orange);
+  color: var(--accent-orange);
+  margin-top: 8px;
+  animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Traffic Styles */
+.traffic-status {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  background: linear-gradient(45deg, var(--primary-cyan), var(--accent-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.traffic-delay {
+  font-size: 13px;
+  color: var(--accent-orange);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.traffic-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 120px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.traffic-hotspots {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  padding: 6px 8px;
+  background: rgba(78, 205, 196, 0.1);
+  border-radius: 6px;
+  border-left: 2px solid var(--accent-green);
+}
+
+/* Health Styles */
+.health-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pollen {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.flu-activity {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.allergens {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  background: rgba(255, 165, 0, 0.1);
+  border-radius: 6px;
+  border-left: 2px solid var(--accent-orange);
+}
+
+.covid-alert {
+  padding: 10px 12px;
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(255, 107, 107, 0.1));
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  border-radius: 8px;
+  color: var(--accent-orange);
+  font-size: 11px;
+  font-weight: 600;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 165, 0, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(255, 165, 0, 0.4); }
+}
+
+.health-advisories div {
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 6px;
+  border-left: 2px solid var(--accent-red);
+  font-size: 11px;
+  color: var(--accent-red);
+}
+
+/* Crime & Safety Styles */
+.crime-alerts {
+  max-height: 140px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.alert-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s ease;
+  border-left: 3px solid;
+  animation: alertSlide 0.5s ease-out;
+}
+
+@keyframes alertSlide {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.alert-item.critical {
+  background: rgba(255, 107, 107, 0.1);
+  border-left-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+.alert-item.warning {
+  background: rgba(255, 165, 0, 0.1);
+  border-left-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.alert-item:not(.critical):not(.warning) {
+  background: var(--glass-bg);
+  border-left-color: var(--primary-cyan);
+  color: var(--text-secondary);
+}
+
+.alert-item:hover {
+  transform: translateX(4px);
+  /* background-opacity: 0.2; */
+}
+
+.areas-to-avoid {
+  font-size: 11px;
+  color: var(--accent-orange);
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 165, 0, 0.1);
+  border-radius: 6px;
+  border-left: 2px solid var(--accent-orange);
+}
+
+.no-alerts {
+  color: var(--accent-green);
+  font-weight: 600;
+  text-align: center;
+  padding: 20px;
+  background: rgba(78, 205, 196, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(78, 205, 196, 0.2);
+}
+
+/* Business & Markets Styles */
+.alert-item:has-text("🏦") {
+  background: rgba(1, 169, 194, 0.1);
+  border-left-color: var(--primary-cyan);
+  color: var(--primary-cyan);
+}
+
+/* Recommendations Section */
+.recommendations-section {
+  margin-bottom: 40px;
+  animation: sectionSlide 0.8s ease-out 0.6s both;
+}
+
+@keyframes sectionSlide {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.recommendations-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--text-primary), var(--primary-cyan), var(--accent-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+}
+
+.recommendations-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-cyan), var(--accent-orange));
+  border-radius: 1px;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.recommendation-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100px;
+  overflow: hidden;
+  animation: cardFadeIn 0.6s ease-out both;
+  animation-delay: calc(var(--rec-index, 0) * 0.05s);
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.recommendation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(1, 169, 194, 0.05), transparent);
+  transition: left 0.6s ease;
+}
+
+.recommendation-card:hover::before {
+  left: 100%;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 20px var(--primary-cyan-light);
+}
+
+.rec-icon {
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-cyan-light), var(--glass-bg));
+  border-radius: 12px;
+  border: 1px solid var(--primary-cyan-medium);
+  flex-shrink: 0;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.rec-icon::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: linear-gradient(135deg, var(--primary-cyan-light), transparent);
+  border-radius: 11px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.recommendation-card:hover .rec-icon {
+  transform: rotate(5deg) scale(1.1);
+  box-shadow: 0 8px 24px var(--primary-cyan-light);
+}
+
+.recommendation-card:hover .rec-icon::after {
+  opacity: 1;
+}
+
+.rec-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.rec-title {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.rec-message {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 3; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.priority-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 0 16px 16px 0;
+  animation: priorityGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes priorityGlow {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+.priority-indicator.high {
+  background: linear-gradient(180deg, var(--accent-red), #ff4757);
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+}
+
+.priority-indicator.medium {
+  background: linear-gradient(180deg, var(--accent-orange), #ff9500);
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.4);
+}
+
+.priority-indicator.low {
+  background: linear-gradient(180deg, var(--primary-cyan), var(--primary-cyan-hover));
+  box-shadow: 0 0 10px var(--primary-cyan-light);
+}
+
+/* Loading States */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(1, 169, 194, 0.1);
+  border-top: 3px solid var(--primary-cyan);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Error States */
+.alert-error {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: 20px;
+  margin: 40px 0;
+}
+
+.alert-error h3 {
+  color: var(--accent-red);
+  margin-bottom: 16px;
+  font-size: 20px;
+}
+
+.alert-error p {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.retry-button {
+  background: linear-gradient(135deg, var(--primary-cyan), var(--primary-cyan-hover));
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.retry-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.retry-button:hover::before {
+  left: 100%;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(1, 169, 194, 0.3);
+}
+
